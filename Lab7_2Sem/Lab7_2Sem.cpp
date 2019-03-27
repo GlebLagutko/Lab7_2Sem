@@ -8,7 +8,7 @@
 //===============================================================
 //===============================================================
 
-const int N = 7;
+const int N = 5;
 const int M = 2;
 
 namespace Colors
@@ -106,9 +106,8 @@ public:
 
 		SelectObject(hdc, pen3);
 		auto r = 1;
-		auto phi = M_PI / N;
+		double phi = 0;
 		LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
-
 		// Star
 
 		for(int i = 0 ; i < N + 1 ; i++)
@@ -118,12 +117,12 @@ public:
 			phi += M_PI * 2 * M / N;
 		}
 
-		/*for(int i = 0 ; i < N + 1 ; i++) 
+		for(int i = 0 ; i < N + 1 ; i++) 
 		{
 			SelectObject(hdc, pen2);
 			LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
 			phi += M_PI * 2 / N;
-		}*/ 
+		}
 
 
 		DeleteObject(pen1);
@@ -140,7 +139,7 @@ private:
 
 	static double PolarToY(double r, double phi)
 	{
-		return r*sin(phi); // TODO.
+		return r * sin(phi); // TODO.
 	}
 };
 

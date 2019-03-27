@@ -7,9 +7,15 @@
 
 //===============================================================
 //===============================================================
+const int N = 12;
+const int M = 4;
 
-const int N = 5;
-const int M = 2;
+int gcd(int a, int b) {
+	if (b == 0)
+		return a;
+
+	return gcd(b, a % b);
+}
 
 namespace Colors
 {
@@ -85,8 +91,8 @@ public:
 	static void OnDraw(HDC hdc, HWND hWnd)
 	{
 		auto penBrush = LOGBRUSH{ 0,255,2 };
-		auto pen1 = ExtCreatePen(PS_GEOMETRIC | PS_DASH, 5, &penBrush, 0, nullptr);
-		auto pen2 = CreatePen(PS_SOLID, 2, RGB(0,0,255));
+		auto pen1 = ExtCreatePen(PS_GEOMETRIC | PS_DASH, 3, &penBrush, 0, nullptr);
+		auto pen2 = CreatePen(PS_SOLID, 3, RGB(0,0,255));
 		auto pen3 = CreatePen(PS_NULL, 1, RGB(0, 0, 0));
 
 		
@@ -109,20 +115,41 @@ public:
 		double phi = 0;
 		LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
 		// Star
-
-		for(int i = 0 ; i < N + 1 ; i++)
+		if (gcd(M, N) == 1)
 		{
-			SelectObject(hdc, pen2);
-			LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
-			phi += M_PI * 2 * M / N;
+			for (int i = 0; i < N + 1; i++)
+			{
+
+				SelectObject(hdc, pen2);
+				LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
+				phi += M_PI * 2 * M / N;
+			}
+		}
+		else
+		{
+			auto M1 = M / gcd(M, N);
+			auto N1 = N / gcd(M, N);
+			for (auto i = 0; i < gcd(M, N)  ; i++)
+			{
+				phi = M_PI * i * 2 / N;
+				SelectObject(hdc, pen3);
+				LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
+				for (auto a = 0; a < N1 ; a++)
+				{
+					phi += M_PI * 2 * M1 / N1;
+					SelectObject(hdc, pen2);
+					LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
+				}
+
+			}
 		}
 
-		for(int i = 0 ; i < N + 1 ; i++) 
+		/*for(int i = 0 ; i < N + 1 ; i++) 
 		{
 			SelectObject(hdc, pen2);
 			LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
 			phi += M_PI * 2 / N;
-		}
+		}*/
 
 
 		DeleteObject(pen1);

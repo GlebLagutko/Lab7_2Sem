@@ -84,8 +84,8 @@ class Program
 public:
 	static void OnDraw(HDC hdc, HWND hWnd)
 	{
-		auto penBrush = LOGBRUSH{DIB_RGB_COLORS()};
-		auto pen1 = ExtCreatePen(PS_GEOMETRIC | PS_DASH, 3, &penBrush, 0, nullptr);
+		auto penBrush = LOGBRUSH{ 0,255,2 };
+		auto pen1 = ExtCreatePen(PS_GEOMETRIC | PS_DASH, 5, &penBrush, 0, nullptr);
 		auto pen2 = CreatePen(PS_SOLID, 2, RGB(0,0,255));
 		auto pen3 = CreatePen(PS_NULL, 1, RGB(0, 0, 0));
 

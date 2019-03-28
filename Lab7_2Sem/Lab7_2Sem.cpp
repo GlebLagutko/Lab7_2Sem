@@ -7,8 +7,8 @@
 
 //===============================================================
 //===============================================================
-const int N = 12;
-const int M = 4;
+const int N = 5;
+const int M = 2;
 
 int gcd(int a, int b) {
 	if (b == 0)
@@ -115,7 +115,7 @@ public:
 		double phi = 0;
 		LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
 		// Star
-		if (gcd(M, N) == 1)
+		/*if (gcd(M, N) == 1)
 		{
 			for (int i = 0; i < N + 1; i++)
 			{
@@ -125,7 +125,7 @@ public:
 				phi += M_PI * 2 * M / N;
 			}
 		}
-		else
+		else*/
 		{
 			auto M1 = M / gcd(M, N);
 			auto N1 = N / gcd(M, N);
@@ -144,12 +144,12 @@ public:
 			}
 		}
 
-		/*for(int i = 0 ; i < N + 1 ; i++) 
+		for(int i = 0 ; i < N + 1 ; i++) 
 		{
 			SelectObject(hdc, pen2);
 			LineTo(hdc, converter.GetX(PolarToX(r, phi)), converter.GetY(PolarToY(r, phi)));
 			phi += M_PI * 2 / N;
-		}*/
+		}
 
 
 		DeleteObject(pen1);
